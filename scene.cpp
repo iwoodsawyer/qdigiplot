@@ -1,11 +1,9 @@
-#include <QtGui>
-#include <QMessageBox>
-#include <stdlib.h>
-
 #include "qdigiplot.h"
-#include "view.h"
 #include "scene.h"
 #include "cross.h"
+#include "view.h"
+
+#include <stdlib.h>
 
 using namespace std;
 
@@ -123,7 +121,10 @@ void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
             p = mouseEvent->lastScenePos();
             p.setX(p.x() - 5);
             p.setY(p.y() - 5);
-            itemDel = itemAt(p);
+
+			QTransform transform;
+			transform.reset(); // Set to default identity matrix
+            itemDel = itemAt(p,transform);
             
             if (itemDel ==  NULL)
             {

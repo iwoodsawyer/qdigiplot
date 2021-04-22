@@ -1,11 +1,28 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtGui>
+#include <QMessageBox>
+#include <QAction>
+#include <QMenu>
+#include <QMenuBAr>
+#include <QStyle>
+#include <QGraphicsItem>
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QPrinter>
+#include <QPrintDialog>
 #include <QCursor>
+#include <QToolButton>
+#include <QToolBar>
+#include <QStatusBar>
+#include <QFileDialog>
+#include <QLineEdit>
+#include <QCheckBox>
+#include <QTableWidget>
+#include <QDockWidget>
 
 using namespace std;
 

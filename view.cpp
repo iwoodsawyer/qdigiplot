@@ -1,20 +1,7 @@
-//  This file is part of DigiPlot.
-//
-//  DigiPlot is free software; you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation; either version 2 of the License, or
-//  (at your option) any later version.
-//
-//  DigiPlot is distributed in the hope that it will be useful,
-#include <QtGui>
-#include <QtOpenGL>
-
-#include <math.h>
-
 #include "qdigiplot.h"
 #include "view.h"
-#include "scene.h"
-#include "cross.h"
+
+#include <math.h>
 
 using namespace std;
 

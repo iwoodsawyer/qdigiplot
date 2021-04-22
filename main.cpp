@@ -1,8 +1,7 @@
-#include <QApplication>
+#include "qdigiplot.h"
+
 #include <QPixmap>
 #include <QIcon>
-
-#include "qdigiplot.h"
 
 int main(int argc, char *argv[])
 {

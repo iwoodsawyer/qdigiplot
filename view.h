@@ -2,6 +2,7 @@
 #define VIEW_H
 
 #include <QFrame>
+#include <QtOpenGL>
 
 using namespace std;
 

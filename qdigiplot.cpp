@@ -1,11 +1,9 @@
-#include <QtGui>
-#include <QMessageBox>
-#include <math.h>
-
 #include "qdigiplot.h"
 #include "view.h"
 #include "scene.h"
 #include "cross.h"
+
+#include <math.h>
 
 using namespace std;
 
@@ -183,7 +181,7 @@ void MainWindow::about()
     box.setText("DigiPlot\n"
                 "written by Ivo Houtzager\n\n"
                 "Credits:\n"
-                "Silky icons by FAMFAMFAM \n"
+                "Silk icons by FAMFAMFAM \n"
                 "http://www.famfamfam.com \n");
     box.setWindowTitle(tr("About DigiPlot"));
     box.exec();
@@ -507,6 +505,8 @@ void MainWindow::clearPoints()
 {
     int size = valuesList->rowCount();
     qreal x, y;
+	QTransform transform;
+	transform.reset(); // Set to default identity matrix
     
     for (int i=1; i<=size; i++) {
         x = valuesList->item(0,0)->text().toFloat();
@@ -514,8 +514,8 @@ void MainWindow::clearPoints()
 
         valuesList->removeRow(0);
         valuesList->setRowCount(size-i);
-            
-        graphicsScene->removeItem(graphicsScene->itemAt(x-5,y-5));
+		
+        graphicsScene->removeItem(graphicsScene->itemAt(QPointF(x-5,y-5),transform));
         graphicsScene->update();
     }
 }

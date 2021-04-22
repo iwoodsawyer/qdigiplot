@@ -1,8 +1,8 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include <QColor>
 #include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
 #include <QMouseEvent>
 
 using namespace std;

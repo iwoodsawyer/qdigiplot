@@ -2,29 +2,42 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{956f22bf-8dc0-4ca0-a0c3-7f2a5d05c9b8}</UniqueIdentifier>
-      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{dfc0fca1-c754-4335-810f-2ae6c360793a}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Generated Files">
-      <UniqueIdentifier>{00726f7f-340f-420c-aa73-7211fe794816}</UniqueIdentifier>
-      <Extensions>cpp;c;cxx;moc;h;qrc;def;odl;idl;res</Extensions>
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="Resource Files">
-      <UniqueIdentifier>{2717992a-4341-4cf4-8c4f-30bdbb31992d}</UniqueIdentifier>
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>qrc;rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Translation Files">
+      <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
+      <Extensions>ts</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cross.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <QtMoc Include="qdigiplot.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <ClCompile Include="qdigiplot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <QtMoc Include="view.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="scene.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="scene.cpp">
@@ -33,74 +46,23 @@
     <ClCompile Include="view.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="debug\moc_qdigiplot.cpp">
-      <Filter>Generated Files</Filter>
+    <ClCompile Include="cross.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="release\moc_qdigiplot.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_scene.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_scene.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\moc_view.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\moc_view.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="debug\qrc_resources.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="release\qrc_resources.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="winres.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="resources.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cross.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="images\copy.png">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="images\cut.png">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="images\help.png">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="images\new.png">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="images\open.png">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="images\paste.png">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="images\print.png">
-      <Filter>Resource Files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="winres.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="qdigiplot.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="scene.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="view.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="resources.qrc">
-      <Filter>Generated Files</Filter>
-    </CustomBuild>
   </ItemGroup>
 </Project>

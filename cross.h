@@ -1,8 +1,8 @@
 #ifndef CROSS_H
 #define CROSS_H
 
-#include <QColor>
 #include <QGraphicsItem>
+#include <QStyleOptionGraphicsItem>
 
 using namespace std;
 

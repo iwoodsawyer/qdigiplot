@@ -1,14 +1,10 @@
-#include <QtGui>
-
 #include "qdigiplot.h"
-#include "view.h"
-#include "scene.h"
 #include "cross.h"
 
 using namespace std;
 
 
-Cross::Cross(QGraphicsItem *parent, QGraphicsScene *scene) : QGraphicsItem(parent, scene)
+Cross::Cross(QGraphicsItem *parent, QGraphicsScene *scene) : QGraphicsItem(parent)
 {
 }
 
@@ -35,7 +31,7 @@ void Cross::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 }
 
 
-CrossX::CrossX(QGraphicsItem *parent, QGraphicsScene *scene) : QGraphicsItem(parent, scene)
+CrossX::CrossX(QGraphicsItem *parent, QGraphicsScene *scene) : QGraphicsItem(parent)
 {
 }
 
@@ -59,7 +55,7 @@ void CrossX::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
 }
 
 
-CrossY::CrossY(QGraphicsItem *parent, QGraphicsScene *scene) : QGraphicsItem(parent, scene)
+CrossY::CrossY(QGraphicsItem *parent, QGraphicsScene *scene) : QGraphicsItem(parent)
 {
 }
 

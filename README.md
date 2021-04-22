@@ -1,5 +1,5 @@
 # QDigiPlot
-GUI program for extracting data points from scanned image file of plot.
+QT GUI program for extracting data points from scanned image file of plot.
 
 Credits: Silk icons by FAMFAMFAM, see http://www.famfamfam.com
 

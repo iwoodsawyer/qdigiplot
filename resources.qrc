@@ -1,0 +1,21 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+<file>images/folder_image.png</file>
+<file>images/help.png</file>	
+<file>images/printer.png</file>
+<file>images/zoom_out.png</file>
+<file>images/zoom_in.png</file>
+<file>images/flag_blue.png</file>
+<file>images/flag_pink.png</file>
+<file>images/arrow_rotate_anticlockwise.png</file>
+<file>images/arrow_rotate_clockwise.png</file>
+<file>images/arrow_refresh.png</file>
+<file>images/chart_curve2.png</file>
+<file>images/table_refresh.png</file>
+<file>images/table_save.png</file>	
+<file>images/chart_line_delete.png</file>
+<file>images/chart_curve_delete.png</file>
+<file>images/anchor.png</file>
+<file>images/door_in.png</file>
+</qresource>
+</RCC>

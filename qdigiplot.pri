@@ -7,13 +7,13 @@
 message("You are running qmake on a generated .pro file. This may not work!")
 
 
-HEADERS += ./cross.h \
-    ./qdigiplot.h \
+HEADERS += ./qdigiplot.h \
+    ./view.h \
     ./scene.h \
-    ./view.h
-SOURCES += ./cross.cpp \
-    ./qdigiplot.cpp \
+    ./cross.h
+SOURCES += ./qdigiplot.cpp \
+    ./main.cpp \
     ./scene.cpp \
     ./view.cpp \
-    ./main.cpp
+    ./cross.cpp
 RESOURCES += resources.qrc

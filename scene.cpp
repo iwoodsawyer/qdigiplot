@@ -28,7 +28,7 @@ void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
             if (!defX0)
             {
                 pX0 = p;
-                lineX = new QGraphicsLineItem(QLineF(pX0,pX0));     
+                lineX = new QGraphicsLineItem(QLineF(pX0,pX0));
                 lineX->setPen(QPen(Qt::blue));
                 crossX0 = new CrossX;
                 crossX0->setPos(pX0);
@@ -122,8 +122,8 @@ void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
             p.setX(p.x() - 5);
             p.setY(p.y() - 5);
 
-			QTransform transform;
-			transform.reset(); // Set to default identity matrix
+            QTransform transform;
+            transform.reset(); // Set to default identity matrix
             itemDel = itemAt(p,transform);
             
             if (itemDel ==  NULL)

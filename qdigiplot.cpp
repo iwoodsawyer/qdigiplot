@@ -505,8 +505,8 @@ void MainWindow::clearPoints()
 {
     int size = valuesList->rowCount();
     qreal x, y;
-	QTransform transform;
-	transform.reset(); // Set to default identity matrix
+    QTransform transform;
+    transform.reset(); // Set to default identity matrix
     
     for (int i=1; i<=size; i++) {
         x = valuesList->item(0,0)->text().toFloat();
@@ -514,7 +514,7 @@ void MainWindow::clearPoints()
 
         valuesList->removeRow(0);
         valuesList->setRowCount(size-i);
-		
+ 
         graphicsScene->removeItem(graphicsScene->itemAt(QPointF(x-5,y-5),transform));
         graphicsScene->update();
     }

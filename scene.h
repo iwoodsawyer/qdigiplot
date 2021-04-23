@@ -52,7 +52,6 @@ protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
 
 private:
-    QGraphicsItem *itemDel;
     QPointF p;
 };
 

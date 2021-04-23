@@ -55,11 +55,23 @@ void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
                 addItem(textX1);
                 update();
                 defX1 = true;
+                defXaxis = false;
                 view->xAxisButton->setEnabled(true);
                 return;
             }
         }
-        defXaxis = false;
+        if (mouseEvent->button() == Qt::RightButton)
+        {
+            if (defX0 && !defX1)
+            {
+                removeItem(lineX);
+                removeItem(textX0);
+                removeItem(crossX0);
+                update();
+                defX0 = false;
+                return;
+            }
+        }
     }
     
     if (defYaxis)
@@ -97,11 +109,23 @@ void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
                 addItem(textY1);
                 update();
                 defY1 = true;
+                defYaxis = false;
                 view->yAxisButton->setEnabled(true);
                 return;
             }
         }
-        defYaxis = false;
+        if (mouseEvent->button() == Qt::RightButton)
+        {
+            if (defY0 && !defY1)
+            {
+                removeItem(lineY);
+                removeItem(textY0);
+                removeItem(crossY0);
+                update();
+                defY0 = false;
+                return;
+            }
+        }
     }
 
     if (defCross)
@@ -113,11 +137,11 @@ void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
             itemCross->setPos(p);
             addItem(itemCross);
             update();
-
             window->insertPixel(p);
         }
         if (mouseEvent->button() == Qt::RightButton) 
         {
+            QGraphicsItem *itemDel;
             p = mouseEvent->lastScenePos();
             p.setX(p.x() - 5);
             p.setY(p.y() - 5);
@@ -125,23 +149,25 @@ void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
             QTransform transform;
             transform.reset(); // Set to default identity matrix
             itemDel = itemAt(p,transform);
-            
-            if (itemDel ==  NULL)
-            {
+            if (itemDel == nullptr) {
                 return;
             }
             
-            if (window->removePixel(itemDel->pos()))
-            {
-                removeItem(itemDel);
-                update();
-            }   
+            QRectF rectDel = itemDel->boundingRect();
+
+            if ((rectDel.height() == 5) && (rectDel.width() == 5)) {
+                if (window->removePixel(itemDel->pos())) {
+                    removeItem(itemDel);
+                    update();
+                }
+            }
         }
     }
 };
 
 void MyGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
+
     if (defXaxis)
     {
         p = mouseEvent->lastScenePos();

@@ -48,6 +48,7 @@ void MainWindow::openImage()
                                      tr("Cannot load %1.").arg(fileName));
             return;
         }
+        clearScreen();
         setCurrentImage(fileName);
         setCurrentFile(fileName);
         graphicsScene->setSceneRect(QRect(0, 0, image.width(), image.height()));
@@ -63,8 +64,9 @@ void MainWindow::openRecentImage()
     if (action)
     {
         QImage image(fileName);
+        clearScreen();
         setCurrentImage(fileName);
-        setCurrentFile(fileName);           
+        setCurrentFile(fileName);
         graphicsScene->setSceneRect(QRect(0, 0, image.width(), image.height()));
         graphicsImage->setPixmap(QPixmap::fromImage(image));
     }
@@ -503,6 +505,7 @@ bool MainWindow::removePixel(const QPointF &point)
 
 void MainWindow::clearPoints()
 {
+    QGraphicsItem *itemDel;
     int size = valuesList->rowCount();
     qreal x, y;
     QTransform transform;
@@ -515,24 +518,39 @@ void MainWindow::clearPoints()
         valuesList->removeRow(0);
         valuesList->setRowCount(size-i);
  
-        graphicsScene->removeItem(graphicsScene->itemAt(QPointF(x-5,y-5),transform));
-        graphicsScene->update();
+        itemDel = graphicsScene->itemAt(QPointF(x - 5, y - 5), transform);
+        if (itemDel != nullptr) {
+            graphicsScene->removeItem(itemDel);
+            graphicsScene->update();
+        }
     }
 }
 
 void MainWindow::clearScreen()
 {
     clearPoints();
-    graphicsScene->removeItem(graphicsScene->lineX);
-    graphicsScene->removeItem(graphicsScene->lineY);
-    graphicsScene->removeItem(graphicsScene->textX0);
-    graphicsScene->removeItem(graphicsScene->textX1);
-    graphicsScene->removeItem(graphicsScene->textY0);
-    graphicsScene->removeItem(graphicsScene->textY1);
-    graphicsScene->removeItem(graphicsScene->crossX0);
-    graphicsScene->removeItem(graphicsScene->crossX1);
-    graphicsScene->removeItem(graphicsScene->crossY0);
-    graphicsScene->removeItem(graphicsScene->crossY1);
+    if (graphicsScene->defX1)
+    {
+        graphicsScene->removeItem(graphicsScene->textX1);
+        graphicsScene->removeItem(graphicsScene->crossX1);
+    }
+    if (graphicsScene->defX0)
+    {
+        graphicsScene->removeItem(graphicsScene->lineX);
+        graphicsScene->removeItem(graphicsScene->textX0);
+        graphicsScene->removeItem(graphicsScene->crossX0);
+    }
+    if (graphicsScene->defY1)
+    {
+        graphicsScene->removeItem(graphicsScene->textY1);
+        graphicsScene->removeItem(graphicsScene->crossY1);
+    }
+    if (graphicsScene->defY0)
+    {
+        graphicsScene->removeItem(graphicsScene->lineY);
+        graphicsScene->removeItem(graphicsScene->textY0);
+        graphicsScene->removeItem(graphicsScene->crossY0);
+    }
     graphicsScene->defXaxis = true;
     graphicsScene->defYaxis = true;
     graphicsScene->defCross = true;
@@ -545,11 +563,17 @@ void MainWindow::clearScreen()
 void MainWindow::newXAxis()
 {
     view->xAxisButton->setEnabled(false);
-    graphicsScene->removeItem(graphicsScene->lineX);
-    graphicsScene->removeItem(graphicsScene->textX0);
-    graphicsScene->removeItem(graphicsScene->textX1);
-    graphicsScene->removeItem(graphicsScene->crossX0);
-    graphicsScene->removeItem(graphicsScene->crossX1);
+    if (graphicsScene->defX1)
+    {
+        graphicsScene->removeItem(graphicsScene->textX1);
+        graphicsScene->removeItem(graphicsScene->crossX1);
+    }
+    if (graphicsScene->defX0)
+    {
+        graphicsScene->removeItem(graphicsScene->lineX);
+        graphicsScene->removeItem(graphicsScene->textX0);
+        graphicsScene->removeItem(graphicsScene->crossX0);
+    }
     graphicsScene->defXaxis = true;
     graphicsScene->defX0 = false;
     graphicsScene->defX1 = false;
@@ -558,11 +582,17 @@ void MainWindow::newXAxis()
 void MainWindow::newYAxis()
 {
     view->yAxisButton->setEnabled(false);
-    graphicsScene->removeItem(graphicsScene->lineY);
-    graphicsScene->removeItem(graphicsScene->textY0);
-    graphicsScene->removeItem(graphicsScene->textY1);
-    graphicsScene->removeItem(graphicsScene->crossY0);
-    graphicsScene->removeItem(graphicsScene->crossY1);
+    if (graphicsScene->defY1)
+    {
+        graphicsScene->removeItem(graphicsScene->textY1);
+        graphicsScene->removeItem(graphicsScene->crossY1);
+    }
+    if (graphicsScene->defY0)
+    {
+        graphicsScene->removeItem(graphicsScene->lineY);
+        graphicsScene->removeItem(graphicsScene->textY0);
+        graphicsScene->removeItem(graphicsScene->crossY0);
+    }
     graphicsScene->defYaxis = true;
     graphicsScene->defY0 = false;
     graphicsScene->defY1 = false;
@@ -605,30 +635,45 @@ void MainWindow::realPoints(const QPointF &point, QPointF &real)
     bool ok1y = false;
 
     ox0 = QString(view->xeLineEdit->text()).toFloat(&ok0x);
-    if (!ok0x)
-        QMessageBox::information( this, "X Axis", "The x0 value is not properly set.");
-
+    if (!ok0x) {
+        QMessageBox::information(this, "X Axis", "The x0 value is not properly set.");
+        ox0 = 0;
+    }
     ox1 = QString(view->xtLineEdit->text()).toFloat(&ok1x);
-    if (!ok1x)
-        QMessageBox::information( this, "X Axis", "The x1 value is not properly set.");
-
+    if (!ok1x) {
+        QMessageBox::information(this, "X Axis", "The x1 value is not properly set.");
+        ox1 = 1;
+    }
     oy0 = QString(view->yeLineEdit->text()).toFloat(&ok0y);
-    if (!ok0y)
-        QMessageBox::information( this, "Y Axis", "The y0 value is not properly set.");
-
+    if (!ok0y) {
+        QMessageBox::information(this, "Y Axis", "The y0 value is not properly set.");
+        oy0 = 0;
+    }
     oy1 = QString(view->ytLineEdit->text()).toFloat(&ok1y);
-    if (!ok1y)
-        QMessageBox::information( this, "Y Axis", "The y1 value is not properly set.");
+    if (!ok1y) {
+        QMessageBox::information(this, "Y Axis", "The y1 value is not properly set.");
+        oy1 = 1;
+    }
 
-    if (view->xLogBox->isChecked())
-        scaleX = log10(ox1/ox0);
-    else
+    if (view->xLogBox->isChecked()) {
+        if (ox0 == 0) {
+            ox0 = ox1*1e-37;
+        }
+        scaleX = log10(ox1 / ox0);
+    }
+    else {
         scaleX = ox1 - ox0;
+    }
 
-    if (view->yLogBox->isChecked())
-        scaleY = log10(oy1/oy0);
-    else
+    if (view->yLogBox->isChecked()) {
+        if (oy0 == 0) {
+            oy0 = oy1*1e-37;
+        }
+        scaleY = log10(oy1 / oy0);
+    }
+    else {
         scaleY = oy1 - oy0;
+    }
 
     pX0x = graphicsScene->pX0.x();
     pX0y = graphicsScene->pX0.y();

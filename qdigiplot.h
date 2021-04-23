@@ -69,7 +69,6 @@ private slots:
     
 private:
     void createActions();
-    void updateActions();
     void createMenus();
     void createDockWindows();
     void createToolBars();
@@ -78,7 +77,6 @@ private:
     void writeSettings();
     bool saveFile(const QString &fileName);
     void setCurrentFile(const QString &fileName);
-    void adjustScrollBar(QScrollBar *scrollBar, double factor);
     void setCurrentImage(const QString &fileName);
     void updateRecentImageActions();
     void realPoints(const QPointF &point, QPointF &real);

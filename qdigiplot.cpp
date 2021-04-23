@@ -88,8 +88,9 @@ void MainWindow::setCurrentImage(const QString &fileName)
 
     foreach (QWidget *widget, QApplication::topLevelWidgets()) {
         MainWindow *mainWin = qobject_cast<MainWindow *>(widget);
-        if (mainWin)
+        if (mainWin) {
             mainWin->updateRecentImageActions();
+        }
     }
     settings.endGroup();
 }
@@ -505,11 +506,8 @@ bool MainWindow::removePixel(const QPointF &point)
 
 void MainWindow::clearPoints()
 {
-    QGraphicsItem *itemDel;
     int size = valuesList->rowCount();
     qreal x, y;
-    QTransform transform;
-    transform.reset(); // Set to default identity matrix
     
     for (int i=1; i<=size; i++) {
         x = valuesList->item(0,0)->text().toFloat();
@@ -517,85 +515,26 @@ void MainWindow::clearPoints()
 
         valuesList->removeRow(0);
         valuesList->setRowCount(size-i);
- 
-        itemDel = graphicsScene->itemAt(QPointF(x - 5, y - 5), transform);
-        if (itemDel != nullptr) {
-            graphicsScene->removeItem(itemDel);
-            graphicsScene->update();
-        }
+
+        graphicsScene->clearCross(x,y);
     }
 }
 
 void MainWindow::clearScreen()
 {
     clearPoints();
-    if (graphicsScene->defX1)
-    {
-        graphicsScene->removeItem(graphicsScene->textX1);
-        graphicsScene->removeItem(graphicsScene->crossX1);
-    }
-    if (graphicsScene->defX0)
-    {
-        graphicsScene->removeItem(graphicsScene->lineX);
-        graphicsScene->removeItem(graphicsScene->textX0);
-        graphicsScene->removeItem(graphicsScene->crossX0);
-    }
-    if (graphicsScene->defY1)
-    {
-        graphicsScene->removeItem(graphicsScene->textY1);
-        graphicsScene->removeItem(graphicsScene->crossY1);
-    }
-    if (graphicsScene->defY0)
-    {
-        graphicsScene->removeItem(graphicsScene->lineY);
-        graphicsScene->removeItem(graphicsScene->textY0);
-        graphicsScene->removeItem(graphicsScene->crossY0);
-    }
-    graphicsScene->defXaxis = true;
-    graphicsScene->defYaxis = true;
-    graphicsScene->defCross = true;
-    graphicsScene->defX0 = false;
-    graphicsScene->defX1 = false;
-    graphicsScene->defY0 = false;
-    graphicsScene->defY1 = false;
+    graphicsScene->clearXAxis();
+    graphicsScene->clearYAxis();
 }
 
 void MainWindow::newXAxis()
 {
-    view->xAxisButton->setEnabled(false);
-    if (graphicsScene->defX1)
-    {
-        graphicsScene->removeItem(graphicsScene->textX1);
-        graphicsScene->removeItem(graphicsScene->crossX1);
-    }
-    if (graphicsScene->defX0)
-    {
-        graphicsScene->removeItem(graphicsScene->lineX);
-        graphicsScene->removeItem(graphicsScene->textX0);
-        graphicsScene->removeItem(graphicsScene->crossX0);
-    }
-    graphicsScene->defXaxis = true;
-    graphicsScene->defX0 = false;
-    graphicsScene->defX1 = false;
+    graphicsScene->clearXAxis();
 }
 
 void MainWindow::newYAxis()
 {
-    view->yAxisButton->setEnabled(false);
-    if (graphicsScene->defY1)
-    {
-        graphicsScene->removeItem(graphicsScene->textY1);
-        graphicsScene->removeItem(graphicsScene->crossY1);
-    }
-    if (graphicsScene->defY0)
-    {
-        graphicsScene->removeItem(graphicsScene->lineY);
-        graphicsScene->removeItem(graphicsScene->textY0);
-        graphicsScene->removeItem(graphicsScene->crossY0);
-    }
-    graphicsScene->defYaxis = true;
-    graphicsScene->defY0 = false;
-    graphicsScene->defY1 = false;
+    graphicsScene->clearYAxis();
 }
 
 void MainWindow::recalculate()
@@ -730,7 +669,3 @@ void MainWindow::swap(qreal &f1, qreal &f2)
    f1 = f2;
    f2 = temp;
 }
-
-
-
-

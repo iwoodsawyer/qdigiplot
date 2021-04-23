@@ -18,6 +18,57 @@ MyGraphicsScene::MyGraphicsScene(QObject* parent) : QGraphicsScene(parent)
     defY1 = false;
 }
 
+void MyGraphicsScene::clearXAxis()
+{
+    view->xAxisButton->setEnabled(false);
+    if (defX1)
+    {
+        removeItem(textX1);
+        removeItem(crossX1);
+    }
+    if (defX0)
+    {
+        removeItem(lineX);
+        removeItem(textX0);
+        removeItem(crossX0);
+    }
+    defXaxis = true;
+    defX0 = false;
+    defX1 = false;
+}
+
+void MyGraphicsScene::clearYAxis()
+{
+    view->yAxisButton->setEnabled(false);
+    if (defY1)
+    {
+        removeItem(textY1);
+        removeItem(crossY1);
+    }
+    if (defY0)
+    {
+        removeItem(lineY);
+        removeItem(textY0);
+        removeItem(crossY0);
+    }
+    defYaxis = true;
+    defY0 = false;
+    defY1 = false;
+}
+
+void MyGraphicsScene::clearCross(qreal x, qreal y)
+{
+    QGraphicsItem *itemDel;
+    QTransform transform;
+    transform.reset(); // Set to default identity matrix
+
+    itemDel = itemAt(QPointF(x - 5, y - 5), transform);
+    if (itemDel != nullptr) {
+        removeItem(itemDel);
+        update();
+    }
+}
+
 void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
     if (defXaxis)
@@ -57,6 +108,9 @@ void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
                 defX1 = true;
                 defXaxis = false;
                 view->xAxisButton->setEnabled(true);
+                if (!defYaxis) {
+                    window->recalculate();
+                }
                 return;
             }
         }
@@ -111,6 +165,9 @@ void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
                 defY1 = true;
                 defYaxis = false;
                 view->yAxisButton->setEnabled(true);
+                if (!defXaxis) {
+                    window->recalculate();
+                }
                 return;
             }
         }
@@ -154,7 +211,6 @@ void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
             }
             
             QRectF rectDel = itemDel->boundingRect();
-
             if ((rectDel.height() == 5) && (rectDel.width() == 5)) {
                 if (window->removePixel(itemDel->pos())) {
                     removeItem(itemDel);

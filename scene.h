@@ -20,6 +20,11 @@ class MyGraphicsScene : public QGraphicsScene
 
 public:
     MyGraphicsScene(QObject* parent = 0);
+
+    void clearXAxis();
+    void clearYAxis();
+    void clearCross(qreal x, qreal y);
+
     MainWindow *window;
     View *view;
     QPointF pX0;

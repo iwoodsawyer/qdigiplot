@@ -5,8 +5,6 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QMouseEvent>
 
-using namespace std;
-
 class QGraphicsTextItem;
 class QGraphicsLineItem;
 class CrossX;
@@ -25,22 +23,22 @@ public:
     void clearYAxis();
     void clearCross(qreal x, qreal y);
 
-    MainWindow *window;
-    View *view;
+    MainWindow* window;
+    View* view;
     QPointF pX0;
     QPointF pX1;
     QPointF pY0;
     QPointF pY1;
-    QGraphicsLineItem *lineX;
-    QGraphicsLineItem *lineY;
-    QGraphicsTextItem *textX0;
-    QGraphicsTextItem *textX1;
-    QGraphicsTextItem *textY0;
-    QGraphicsTextItem *textY1;
-    CrossX *crossX0;
-    CrossX *crossX1;
-    CrossY *crossY0;
-    CrossY *crossY1;
+    QGraphicsLineItem* lineX;
+    QGraphicsLineItem* lineY;
+    QGraphicsTextItem* textX0;
+    QGraphicsTextItem* textX1;
+    QGraphicsTextItem* textY0;
+    QGraphicsTextItem* textY1;
+    CrossX* crossX0;
+    CrossX* crossX1;
+    CrossY* crossY0;
+    CrossY* crossY1;
 
     bool defXaxis;
     bool defYaxis;

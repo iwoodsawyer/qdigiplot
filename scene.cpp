@@ -3,8 +3,7 @@
 #include "cross.h"
 #include "view.h"
 
-#include <stdlib.h>
-
+#include <cstdlib>
 using namespace std;
 
 MyGraphicsScene::MyGraphicsScene(QObject* parent) : QGraphicsScene(parent)
@@ -58,7 +57,7 @@ void MyGraphicsScene::clearYAxis()
 
 void MyGraphicsScene::clearCross(qreal x, qreal y)
 {
-    QGraphicsItem *itemDel;
+    QGraphicsItem* itemDel;
     QTransform transform;
     transform.reset(); // Set to default identity matrix
 
@@ -73,13 +72,13 @@ void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
     if (defXaxis)
     {
-        if (mouseEvent->button() == Qt::LeftButton) 
-        {   
+        if (mouseEvent->button() == Qt::LeftButton)
+        {
             p = mouseEvent->lastScenePos();
             if (!defX0)
             {
                 pX0 = p;
-                lineX = new QGraphicsLineItem(QLineF(pX0,pX0));
+                lineX = new QGraphicsLineItem(QLineF(pX0, pX0));
                 lineX->setPen(QPen(Qt::blue));
                 crossX0 = new CrossX;
                 crossX0->setPos(pX0);
@@ -96,7 +95,7 @@ void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
             if (defX0 && !defX1)
             {
                 pX1 = p;
-                lineX->setLine(QLineF(pX0,pX1));
+                lineX->setLine(QLineF(pX0, pX1));
                 crossX1 = new CrossX;
                 crossX1->setPos(pX1);
                 textX1 = new QGraphicsTextItem(tr("x1"));
@@ -127,16 +126,16 @@ void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
             }
         }
     }
-    
+
     if (defYaxis)
     {
-        if (mouseEvent->button() == Qt::LeftButton) 
-        {   
+        if (mouseEvent->button() == Qt::LeftButton)
+        {
             p = mouseEvent->lastScenePos();
             if (!defY0)
             {
                 pY0 = p;
-                lineY = new QGraphicsLineItem(QLineF(pY0,pY0));
+                lineY = new QGraphicsLineItem(QLineF(pY0, pY0));
                 lineY->setPen(QPen(Qt::magenta));
                 crossY0 = new CrossY;
                 crossY0->setPos(pY0);
@@ -153,7 +152,7 @@ void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
             if (defY0 && !defY1)
             {
                 pY1 = p;
-                lineY->setLine(QLineF(pY0,pY1));
+                lineY->setLine(QLineF(pY0, pY1));
                 crossY1 = new CrossY;
                 crossY1->setPos(pY1);
                 textY1 = new QGraphicsTextItem(tr("y1"));
@@ -187,29 +186,29 @@ void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 
     if (defCross)
     {
-        if (mouseEvent->button() == Qt::LeftButton) 
-        {   
-            QGraphicsItem *itemCross = new Cross;
+        if (mouseEvent->button() == Qt::LeftButton)
+        {
+            QGraphicsItem* itemCross = new Cross;
             p = mouseEvent->lastScenePos();
             itemCross->setPos(p);
             addItem(itemCross);
             update();
             window->insertPixel(p);
         }
-        if (mouseEvent->button() == Qt::RightButton) 
+        if (mouseEvent->button() == Qt::RightButton)
         {
-            QGraphicsItem *itemDel;
+            QGraphicsItem* itemDel;
             p = mouseEvent->lastScenePos();
             p.setX(p.x() - 5);
             p.setY(p.y() - 5);
 
             QTransform transform;
             transform.reset(); // Set to default identity matrix
-            itemDel = itemAt(p,transform);
+            itemDel = itemAt(p, transform);
             if (itemDel == nullptr) {
                 return;
             }
-            
+
             QRectF rectDel = itemDel->boundingRect();
             if ((rectDel.height() == 5) && (rectDel.width() == 5)) {
                 if (window->removePixel(itemDel->pos())) {
@@ -223,13 +222,12 @@ void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 
 void MyGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
-
     if (defXaxis)
     {
         p = mouseEvent->lastScenePos();
         if (defX0 && !defX1)
         {
-            lineX->setLine(QLineF(pX0,p));
+            lineX->setLine(QLineF(pX0, p));
             update();
         }
     }
@@ -238,7 +236,7 @@ void MyGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
         p = mouseEvent->lastScenePos();
         if (defY0 && !defY1)
         {
-            lineY->setLine(QLineF(pY0,p));
+            lineY->setLine(QLineF(pY0, p));
             update();
         }
     }

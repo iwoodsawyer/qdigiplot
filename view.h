@@ -3,8 +3,9 @@
 
 #include <QFrame>
 #include <QtOpenGL>
-
-using namespace std;
+#include <QBoxLayout>
+#include <QBoxLayout>
+#include <QScrollBar>
 
 class MainWindow;
 class MyGraphicsScene;
@@ -20,19 +21,19 @@ class View : public QFrame
     Q_OBJECT
 
 public:
-    View(QWidget *parent = 0);
-    MainWindow *window;
-    MyGraphicsScene *graphicsScene;
-    QGraphicsView *graphicsView;
-    QGraphicsView *view() const;
-    QToolButton *xAxisButton;
-    QToolButton *yAxisButton;
-    QCheckBox *xLogBox;
-    QCheckBox *yLogBox;
-    QLineEdit *xeLineEdit;
-    QLineEdit *xtLineEdit;
-    QLineEdit *yeLineEdit;
-    QLineEdit *ytLineEdit;
+    View(QWidget* parent = 0);
+    MainWindow* window;
+    MyGraphicsScene* graphicsScene;
+    QGraphicsView* graphicsView;
+    QGraphicsView* view() const;
+    QToolButton* xAxisButton;
+    QToolButton* yAxisButton;
+    QCheckBox* xLogBox;
+    QCheckBox* yLogBox;
+    QLineEdit* xeLineEdit;
+    QLineEdit* xtLineEdit;
+    QLineEdit* yeLineEdit;
+    QLineEdit* ytLineEdit;
 
 public slots:
     void resetView();
@@ -49,15 +50,15 @@ public slots:
     void rotateRight();
     void print();
 
-private slots: 
+private slots:
     void setResetButtonEnabled();
-    void setupMatrix();  
-   
+    void setupMatrix();
+
 private:
-    QLabel *label;
-    QToolButton *resetButton;
-    QSlider *zoomSlider;
-    QSlider *rotateSlider;
+    QLabel* label;
+    QToolButton* resetButton;
+    QSlider* zoomSlider;
+    QSlider* rotateSlider;
 };
 
 #endif

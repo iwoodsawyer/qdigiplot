@@ -1,30 +1,29 @@
 #include "qdigiplot.h"
 #include "view.h"
 
-#include <math.h>
-
+#include <cmath>
 using namespace std;
 
-View::View(QWidget *parent) : QFrame(parent)
+View::View(QWidget* parent) : QFrame(parent)
 {
     setFrameStyle(Raised | StyledPanel);
     graphicsView = new QGraphicsView;
     graphicsView->setRenderHint(QPainter::Antialiasing, false);
     graphicsView->setCursor(QCursor(Qt::CrossCursor));
 
-    QToolButton *zoomInIcon = new QToolButton;
+    QToolButton* zoomInIcon = new QToolButton;
     zoomInIcon->setAutoRepeat(true);
     zoomInIcon->setAutoRepeatInterval(33);
     zoomInIcon->setAutoRepeatDelay(0);
     zoomInIcon->setIcon(QPixmap(":/images/zoom_in.png"));
-    zoomInIcon->setIconSize(QSize(16,16));
+    zoomInIcon->setIconSize(QSize(16, 16));
     zoomInIcon->setStatusTip(tr("Increase Zoom with 1%"));
-    QToolButton *zoomOutIcon = new QToolButton;
+    QToolButton* zoomOutIcon = new QToolButton;
     zoomOutIcon->setAutoRepeat(true);
     zoomOutIcon->setAutoRepeatInterval(33);
     zoomOutIcon->setAutoRepeatDelay(0);
     zoomOutIcon->setIcon(QPixmap(":/images/zoom_out.png"));
-    zoomOutIcon->setIconSize(QSize(16,16));
+    zoomOutIcon->setIconSize(QSize(16, 16));
     zoomOutIcon->setStatusTip(tr("Decrease Zoom with 1%"));
     zoomSlider = new QSlider;
     zoomSlider->setMinimum(0);
@@ -33,18 +32,18 @@ View::View(QWidget *parent) : QFrame(parent)
     zoomSlider->setTickPosition(QSlider::TicksRight);
 
     // Zoom slider layout
-    QVBoxLayout *zoomSliderLayout = new QVBoxLayout;
+    QVBoxLayout* zoomSliderLayout = new QVBoxLayout;
     zoomSliderLayout->addWidget(zoomInIcon);
     zoomSliderLayout->addWidget(zoomSlider);
     zoomSliderLayout->addWidget(zoomOutIcon);
 
-    QToolButton *rotateLeftIcon = new QToolButton;
+    QToolButton* rotateLeftIcon = new QToolButton;
     rotateLeftIcon->setIcon(QPixmap(":/images/arrow_rotate_anticlockwise.png"));
-    rotateLeftIcon->setIconSize(QSize(16,16));
+    rotateLeftIcon->setIconSize(QSize(16, 16));
     rotateLeftIcon->setStatusTip(tr("Rotate image one degree counter clockwise"));
-    QToolButton *rotateRightIcon = new QToolButton;
+    QToolButton* rotateRightIcon = new QToolButton;
     rotateRightIcon->setIcon(QPixmap(":/images/arrow_rotate_clockwise.png"));
-    rotateRightIcon->setIconSize(QSize(16,16));
+    rotateRightIcon->setIconSize(QSize(16, 16));
     rotateRightIcon->setStatusTip(tr("Rotate image one degree clockwise"));
     rotateSlider = new QSlider;
     rotateSlider->setOrientation(Qt::Horizontal);
@@ -54,28 +53,28 @@ View::View(QWidget *parent) : QFrame(parent)
     rotateSlider->setTickPosition(QSlider::TicksBelow);
 
     // Rotate slider layout
-    QHBoxLayout *rotateSliderLayout = new QHBoxLayout;
+    QHBoxLayout* rotateSliderLayout = new QHBoxLayout;
     rotateSliderLayout->addWidget(rotateLeftIcon);
     rotateSliderLayout->addWidget(rotateSlider);
     rotateSliderLayout->addWidget(rotateRightIcon);
 
     resetButton = new QToolButton;
     resetButton->setIcon(QPixmap(":/images/anchor.png"));
-    resetButton->setIconSize(QSize(16,16));
+    resetButton->setIconSize(QSize(16, 16));
     resetButton->setStatusTip(tr("Reset zoom and rotation to normal"));
     resetButton->setEnabled(false);
 
     // Label layout
-    QHBoxLayout *labelLayout = new QHBoxLayout;
+    QHBoxLayout* labelLayout = new QHBoxLayout;
 
     xAxisButton = new QToolButton;
     xAxisButton->setIcon(QPixmap(":/images/flag_blue.png"));
-    xAxisButton->setIconSize(QSize(16,16));
+    xAxisButton->setIconSize(QSize(16, 16));
     xAxisButton->setStatusTip(tr("Redefine X axis"));
     xAxisButton->setEnabled(false);
     yAxisButton = new QToolButton;
     yAxisButton->setIcon(QPixmap(":/images/flag_pink.png"));
-    yAxisButton->setIconSize(QSize(16,16));
+    yAxisButton->setIconSize(QSize(16, 16));
     yAxisButton->setStatusTip(tr("Redefine Y axis"));
     yAxisButton->setEnabled(false);
 
@@ -85,16 +84,16 @@ View::View(QWidget *parent) : QFrame(parent)
     yLogBox->setText(tr("log"));
     xeLineEdit = new QLineEdit;
     xeLineEdit->setText(tr("x0"));
-    xeLineEdit->resize(48,16);
+    xeLineEdit->resize(48, 16);
     xtLineEdit = new QLineEdit;
     xtLineEdit->setText(tr("x1"));
-    xtLineEdit->resize(48,16);
+    xtLineEdit->resize(48, 16);
     yeLineEdit = new QLineEdit;
     yeLineEdit->setText(tr("y0"));
-    yeLineEdit->resize(48,16);
+    yeLineEdit->resize(48, 16);
     ytLineEdit = new QLineEdit;
     ytLineEdit->setText(tr("y1"));
-    ytLineEdit->resize(48,16);
+    ytLineEdit->resize(48, 16);
 
     labelLayout->addWidget(xAxisButton);
     labelLayout->addWidget(xLogBox);
@@ -106,7 +105,7 @@ View::View(QWidget *parent) : QFrame(parent)
     labelLayout->addWidget(yeLineEdit);
     labelLayout->addWidget(ytLineEdit);
 
-    QGridLayout *topLayout = new QGridLayout;
+    QGridLayout* topLayout = new QGridLayout;
     topLayout->addLayout(labelLayout, 0, 0);
     topLayout->addWidget(graphicsView, 1, 0);
     topLayout->addLayout(zoomSliderLayout, 1, 1);
@@ -127,7 +126,7 @@ View::View(QWidget *parent) : QFrame(parent)
     setupMatrix();
 }
 
-QGraphicsView *View::view() const
+QGraphicsView* View::view() const
 {
     return graphicsView;
 }
@@ -149,13 +148,13 @@ void View::setResetButtonEnabled()
 
 void View::setupMatrix()
 {
-    qreal scale = ::pow(2.0, (zoomSlider->value() - 100) / 50.0);
+    qreal scale = pow(2.0, (static_cast<qreal>(zoomSlider->value()) - 100) / 50.0);
 
-    QMatrix matrix;
+    QTransform matrix;
     matrix.scale(scale, scale);
     matrix.rotate(rotateSlider->value());
 
-    graphicsView->setMatrix(matrix);
+    graphicsView->setTransform(matrix);
     setResetButtonEnabled();
 }
 

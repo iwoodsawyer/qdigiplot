@@ -1,10 +1,7 @@
 #include "qdigiplot.h"
 #include "cross.h"
 
-using namespace std;
-
-
-Cross::Cross(QGraphicsItem *parent, QGraphicsScene *scene) : QGraphicsItem(parent)
+Cross::Cross(QGraphicsItem* parent, QGraphicsScene* scene) : QGraphicsItem(parent)
 {
 }
 
@@ -13,7 +10,7 @@ QRectF Cross::boundingRect() const
     return QRectF(-5, -5, 5, 5);
 }
 
-void Cross::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void Cross::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
     Q_UNUSED(widget);
 
@@ -30,8 +27,7 @@ void Cross::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     painter->drawLines(lineVec);
 }
 
-
-CrossX::CrossX(QGraphicsItem *parent, QGraphicsScene *scene) : QGraphicsItem(parent)
+CrossX::CrossX(QGraphicsItem* parent, QGraphicsScene* scene) : QGraphicsItem(parent)
 {
 }
 
@@ -40,7 +36,7 @@ QRectF CrossX::boundingRect() const
     return QRectF(-4, -4, 4, 4);
 }
 
-void CrossX::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void CrossX::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
     Q_UNUSED(widget);
 
@@ -54,8 +50,7 @@ void CrossX::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
     painter->drawLines(lineVec);
 }
 
-
-CrossY::CrossY(QGraphicsItem *parent, QGraphicsScene *scene) : QGraphicsItem(parent)
+CrossY::CrossY(QGraphicsItem* parent, QGraphicsScene* scene) : QGraphicsItem(parent)
 {
 }
 
@@ -64,7 +59,7 @@ QRectF CrossY::boundingRect() const
     return QRectF(-4, -4, 4, 4);
 }
 
-void CrossY::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void CrossY::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
     Q_UNUSED(widget);
 

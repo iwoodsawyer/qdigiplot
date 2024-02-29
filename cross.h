@@ -4,17 +4,15 @@
 #include <QGraphicsItem>
 #include <QStyleOptionGraphicsItem>
 
-using namespace std;
-
 class Cross : public QGraphicsItem
 {
 public:
-    Cross(QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
-    MainWindow *window;
-    MyGraphicsScene *graphicsScene;
-    View *view;
+    Cross(QGraphicsItem* parent = 0, QGraphicsScene* scene = 0);
+    MainWindow* window;
+    MyGraphicsScene* graphicsScene;
+    View* view;
     QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
 
 private:
 
@@ -24,12 +22,12 @@ private:
 class CrossX : public QGraphicsItem
 {
 public:
-    CrossX(QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
-    MainWindow *window;
-    MyGraphicsScene *graphicsScene;
-    View *view;
+    CrossX(QGraphicsItem* parent = 0, QGraphicsScene* scene = 0);
+    MainWindow* window;
+    MyGraphicsScene* graphicsScene;
+    View* view;
     QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
 
 private:
 
@@ -39,12 +37,12 @@ private:
 class CrossY : public QGraphicsItem
 {
 public:
-    CrossY(QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
-    MainWindow *window;
-    MyGraphicsScene *graphicsScene;
-    View *view;
+    CrossY(QGraphicsItem* parent = 0, QGraphicsScene* scene = 0);
+    MainWindow* window;
+    MyGraphicsScene* graphicsScene;
+    View* view;
     QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* item, QWidget* widget);
 
 private:
 

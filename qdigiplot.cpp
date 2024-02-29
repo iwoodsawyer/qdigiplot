@@ -3,11 +3,10 @@
 #include "scene.h"
 #include "cross.h"
 
-#include <math.h>
-
+#include <cmath>
 using namespace std;
 
-MainWindow::MainWindow(int argc, char *argv[])
+MainWindow::MainWindow(int argc, char* argv[])
 {
     graphicsImage = new QGraphicsPixmapItem;
     graphicsScene = new MyGraphicsScene;
@@ -27,10 +26,10 @@ MainWindow::MainWindow(int argc, char *argv[])
 
     updateRecentImageActions();
 
-    graphicsScene->window=this;
-    graphicsScene->view=view;
-    view->window=this;
-    view->graphicsScene=graphicsScene;
+    graphicsScene->window = this;
+    graphicsScene->view = view;
+    view->window = this;
+    view->graphicsScene = graphicsScene;
 
     setCurrentFile("");
     readSettings();
@@ -39,13 +38,13 @@ MainWindow::MainWindow(int argc, char *argv[])
 void MainWindow::openImage()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
-                                    tr("Open File"), QDir::currentPath(),
-                                    tr("All Image Files (*.bmp *.gif *.jpg *.jpeg *.png *.pbm *.pgm *.ppm *.xbm *.xpm);; Bitmap Files (*.bmp);; GIF Files (*.gif);; JPEG Files (*.jpg *.jpeg);; PNG Files (*.png);; All Files (*.*)"));
+        tr("Open File"), QDir::currentPath(),
+        tr("All Image Files (*.bmp *.gif *.jpg *.jpeg *.png *.pbm *.pgm *.ppm *.xbm *.xpm);; Bitmap Files (*.bmp);; GIF Files (*.gif);; JPEG Files (*.jpg *.jpeg);; PNG Files (*.png);; All Files (*.*)"));
     if (!fileName.isEmpty()) {
         QImage image(fileName);
         if (image.isNull()) {
             QMessageBox::information(this, tr("Image Viewer"),
-                                     tr("Cannot load %1.").arg(fileName));
+                tr("Cannot load %1.").arg(fileName));
             return;
         }
         clearScreen();
@@ -59,8 +58,8 @@ void MainWindow::openImage()
 
 void MainWindow::openRecentImage()
 {
-    QAction *action = qobject_cast<QAction *>(sender());
-    QString fileName=QString(action->data().toString());
+    QAction* action = qobject_cast<QAction*>(sender());
+    QString fileName = QString(action->data().toString());
     if (action)
     {
         QImage image(fileName);
@@ -73,7 +72,7 @@ void MainWindow::openRecentImage()
     statusBar()->showMessage(tr("Image loaded"), 2000);
 }
 
-void MainWindow::setCurrentImage(const QString &fileName)
+void MainWindow::setCurrentImage(const QString& fileName)
 {
     QSettings settings("QSoftware", "DigiPlot");
     settings.beginGroup("RecentFiles");
@@ -86,8 +85,8 @@ void MainWindow::setCurrentImage(const QString &fileName)
 
     settings.setValue("recentFileList", files);
 
-    foreach (QWidget *widget, QApplication::topLevelWidgets()) {
-        MainWindow *mainWin = qobject_cast<MainWindow *>(widget);
+    foreach(QWidget * widget, QApplication::topLevelWidgets()) {
+        MainWindow* mainWin = qobject_cast<MainWindow*>(widget);
         if (mainWin) {
             mainWin->updateRecentImageActions();
         }
@@ -100,7 +99,7 @@ void MainWindow::updateRecentImageActions()
     QSettings settings("QSoftware", "DigiPlot");
     settings.beginGroup("RecentFiles");
     QStringList files = settings.value("recentFileList").toStringList();
-    int numRecentFiles = qMin(files.size(),(int)MaxRecentFiles);
+    int numRecentFiles = qMin(files.size(), (int)MaxRecentFiles);
 
     for (int i = 0; i < numRecentFiles; ++i) {
         QString text = tr("&%1 %2").arg(i + 1).arg(strippedName(files[i]));
@@ -115,46 +114,44 @@ void MainWindow::updateRecentImageActions()
     settings.endGroup();
 }
 
-
-
 bool MainWindow::saveAs()
 {
-    QString fileName = QFileDialog::getSaveFileName(this,tr("Save As"),
-                        tr("%1%2").arg(nosuffixName(curFile)).arg(tr(".cvs")),
-                        tr("Comma Separated Value Files (*.cvs);; All Files (*.*)"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
+        tr("%1%2").arg(nosuffixName(curFile)).arg(tr(".cvs")),
+        tr("Comma Separated Value Files (*.cvs);; All Files (*.*)"));
     if (fileName.isEmpty())
         return false;
 
     return saveFile(fileName);
 }
 
-bool MainWindow::saveFile(const QString &fileName)
+bool MainWindow::saveFile(const QString& fileName)
 {
     int size = valuesList->rowCount();
 
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
         QMessageBox::warning(this, tr("DigiPlot"),
-                             tr("Cannot write file %1:\n%2.")
-                             .arg(fileName)
-                             .arg(file.errorString()));
+            tr("Cannot write file %1:\n%2.")
+            .arg(fileName)
+            .arg(file.errorString()));
         return false;
     }
 
     QTextStream out(&file);
     QApplication::setOverrideCursor(Qt::WaitCursor);
-    
-    for (int i=0; i<size; i++) {
-        out << valuesList->item(i,2)->text() << tr(", ") << valuesList->item(i,3)->text() << tr("\n");
+
+    for (int i = 0; i < size; i++) {
+        out << valuesList->item(i, 2)->text() << tr(", ") << valuesList->item(i, 3)->text() << tr("\n");
     }
-    
+
     QApplication::restoreOverrideCursor();
 
     statusBar()->showMessage(tr("File saved"), 2000);
     return true;
 }
 
-void MainWindow::setCurrentFile(const QString &fileName)
+void MainWindow::setCurrentFile(const QString& fileName)
 {
     static int sequenceNumber = 1;
 
@@ -162,18 +159,19 @@ void MainWindow::setCurrentFile(const QString &fileName)
     if (isUntitled) {
         curFile = tr("image%1").arg(sequenceNumber++);
         setWindowTitle(tr("DigiPlot"));
-    } else {
+    }
+    else {
         curFile = QFileInfo(fileName).canonicalFilePath();
         setWindowTitle(tr("%1[*] - %2").arg(strippedName(curFile)).arg(tr("QDigiPlot")));
     }
 }
 
-QString MainWindow::strippedName(const QString &fullFileName)
+QString MainWindow::strippedName(const QString& fullFileName)
 {
     return QFileInfo(fullFileName).fileName();
 }
 
-QString MainWindow::nosuffixName(const QString &fullFileName)
+QString MainWindow::nosuffixName(const QString& fullFileName)
 {
     return QFileInfo(fullFileName).baseName();
 }
@@ -182,10 +180,10 @@ void MainWindow::about()
 {
     QMessageBox box(this);
     box.setText("DigiPlot\n"
-                "written by Ivo Houtzager\n\n"
-                "Credits:\n"
-                "Silk icons by FAMFAMFAM \n"
-                "http://www.famfamfam.com \n");
+        "written by Ivo Houtzager\n\n"
+        "Credits:\n"
+        "Silk icons by FAMFAMFAM \n"
+        "http://www.famfamfam.com \n");
     box.setWindowTitle(tr("About DigiPlot"));
     box.exec();
 }
@@ -194,24 +192,23 @@ void MainWindow::help()
 {
     QMessageBox box(this);
     box.setText("DigiPlot extracts data values from graphs and plots.\n\n"
-                "Features:\n"
-                "- import of most common image file formats; bmp, gif, png, jpg, pbm, pgm, ppm, xbm and xpm\n"  
-                "- export data to comma seperated values file\n"
-                "- manual digitizing via mouse clicks\n"
-                "- can handle distorted graphs, axes do not need to be orthogonal\n"
-                "- linear and logarithmic axes\n"
-                "- graphs can be zoomed and rotated");
+        "Features:\n"
+        "- import of most common image file formats; bmp, gif, png, jpg, pbm, pgm, ppm, xbm and xpm\n"
+        "- export data to comma seperated values file\n"
+        "- manual digitizing via mouse clicks\n"
+        "- can handle distorted graphs, axes do not need to be orthogonal\n"
+        "- linear and logarithmic axes\n"
+        "- graphs can be zoomed and rotated");
     box.setWindowTitle(tr("Help"));
     box.setIcon(QMessageBox::NoIcon);
     box.exec();
 }
 
-
 void MainWindow::createDockWindows()
 {
-    dockTable=new QDockWidget(tr("Values"), this);
+    dockTable = new QDockWidget(tr("Values"), this);
     dockTable->setAllowedAreas(Qt::RightDockWidgetArea);
-    valuesList=new QTableWidget(0,4,dockTable);
+    valuesList = new QTableWidget(0, 4, dockTable);
     QStringList headers;
     headers << tr("X Pixel") << tr("Y Pixel") << tr("X Plot") << tr("Y Plot");
     valuesList->setHorizontalHeaderLabels(headers);
@@ -231,7 +228,7 @@ void MainWindow::createActions()
     {
         recentFileActs[i] = new QAction(this);
         recentFileActs[i]->setVisible(false);
-        connect(recentFileActs[i], SIGNAL(triggered()),this, SLOT(openRecentImage()));
+        connect(recentFileActs[i], SIGNAL(triggered()), this, SLOT(openRecentImage()));
     }
 
     printImageAct = new QAction(QIcon(":/images/printer.png"), tr("&Print..."), this);
@@ -283,7 +280,7 @@ void MainWindow::createActions()
     zoomInAct->setShortcut(tr("Ctrl+Plus"));
     zoomInAct->setStatusTip(tr("Increase Zoom with 1%"));
     connect(zoomInAct, SIGNAL(triggered()), view, SLOT(zoomIn()));
-    
+
     zoomOutAct = new QAction(QIcon(":/images/zoom_out.png"), tr("Zoom Out"), this);
     zoomOutAct->setShortcut(tr("Ctrl+Minus"));
     zoomOutAct->setStatusTip(tr("Decrease Zoom with 1%"));
@@ -399,7 +396,7 @@ void MainWindow::createToolBars()
 {
     fileToolBar = addToolBar(tr("Main Toolbar"));
     fileToolBar->setMovable(false);
-    fileToolBar->setIconSize(QSize(16,16));
+    fileToolBar->setIconSize(QSize(16, 16));
     fileToolBar->addAction(openAct);
     fileToolBar->addAction(saveAsAct);
     fileToolBar->addAction(printImageAct);
@@ -426,7 +423,7 @@ void MainWindow::createStatusBar()
     statusBar()->showMessage(tr("Ready"));
 }
 
-void MainWindow::closeEvent(QCloseEvent *event)
+void MainWindow::closeEvent(QCloseEvent* event)
 {
     writeSettings();
     event->accept();
@@ -436,12 +433,12 @@ void MainWindow::readSettings()
 {
     QSettings settings("QSoftware", "DigiPlot");
     settings.beginGroup("StateMainWindow");
-    fileToolBar->setVisible(settings.value("tool",true).toBool());
-    resize(settings.value("size",QSize(640,480)).toSize());
-    move(settings.value("pos",QPoint(200,200)).toPoint());
+    fileToolBar->setVisible(settings.value("tool", true).toBool());
+    resize(settings.value("size", QSize(640, 480)).toSize());
+    move(settings.value("pos", QPoint(200, 200)).toPoint());
     restoreState(settings.value("state").toByteArray());
     restoreGeometry(settings.value("geometry").toByteArray());
-    dockTable->setVisible(settings.value("dockVis",true).toBool());
+    dockTable->setVisible(settings.value("dockVis", true).toBool());
     dockTable->restoreGeometry(settings.value("dockGeometry").toByteArray());
     settings.endGroup();
 }
@@ -458,17 +455,17 @@ void MainWindow::writeSettings()
     settings.setValue("dockGeometry", dockTable->saveGeometry());
     settings.endGroup();
 }
-void MainWindow::insertPixel(const QPointF &point)
+void MainWindow::insertPixel(const QPointF& point)
 {
     QPointF real;
-    
-    QTableWidgetItem *pixelX = new QTableWidgetItem(tr("%1").arg(point.x()));
-    QTableWidgetItem *pixelY = new QTableWidgetItem(tr("%1").arg(point.y()));
+
+    QTableWidgetItem* pixelX = new QTableWidgetItem(tr("%1").arg(point.x()));
+    QTableWidgetItem* pixelY = new QTableWidgetItem(tr("%1").arg(point.y()));
 
     realPoints(point, real);
 
-    QTableWidgetItem *plotX = new QTableWidgetItem(tr("%1").arg(real.x()));
-    QTableWidgetItem *plotY = new QTableWidgetItem(tr("%1").arg(real.y()));
+    QTableWidgetItem* plotX = new QTableWidgetItem(tr("%1").arg(real.x()));
+    QTableWidgetItem* plotY = new QTableWidgetItem(tr("%1").arg(real.y()));
 
     int row = valuesList->rowCount();
     valuesList->insertRow(row);
@@ -477,26 +474,26 @@ void MainWindow::insertPixel(const QPointF &point)
     valuesList->setItem(row, 2, plotX);
     valuesList->setItem(row, 3, plotY);
 
-    valuesList->scrollToItem(plotY,QAbstractItemView::EnsureVisible);
+    valuesList->scrollToItem(plotY, QAbstractItemView::EnsureVisible);
 }
 
-bool MainWindow::removePixel(const QPointF &point)
+bool MainWindow::removePixel(const QPointF& point)
 {
-    QList<QTableWidgetItem*> pixelListX = valuesList->findItems(tr("%1").arg(point.x()),Qt::MatchExactly);
-    QList<QTableWidgetItem*> pixelListY = valuesList->findItems(tr("%1").arg(point.y()),Qt::MatchExactly);
+    QList<QTableWidgetItem*> pixelListX = valuesList->findItems(tr("%1").arg(point.x()), Qt::MatchExactly);
+    QList<QTableWidgetItem*> pixelListY = valuesList->findItems(tr("%1").arg(point.y()), Qt::MatchExactly);
 
     int size = valuesList->rowCount();
     int sizex = pixelListX.size();
     int sizey = pixelListY.size();
 
-    for (int i=0; i<sizex; i++) {
-        for (int j=0; j<sizey; j++) {
+    for (int i = 0; i < sizex; i++) {
+        for (int j = 0; j < sizey; j++) {
             int rowx = valuesList->row(pixelListX[i]);
             int rowy = valuesList->row(pixelListY[j]);
-        
+
             if (rowx == rowy) {
                 valuesList->removeRow(rowx);
-                valuesList->setRowCount(size-1);
+                valuesList->setRowCount(size - 1);
                 return true;
             }
         }
@@ -508,15 +505,15 @@ void MainWindow::clearPoints()
 {
     int size = valuesList->rowCount();
     qreal x, y;
-    
-    for (int i=1; i<=size; i++) {
-        x = valuesList->item(0,0)->text().toFloat();
-        y = valuesList->item(0,1)->text().toFloat();
+
+    for (int i = 1; i <= size; i++) {
+        x = valuesList->item(0, 0)->text().toFloat();
+        y = valuesList->item(0, 1)->text().toFloat();
 
         valuesList->removeRow(0);
-        valuesList->setRowCount(size-i);
+        valuesList->setRowCount(size - i);
 
-        graphicsScene->clearCross(x,y);
+        graphicsScene->clearCross(x, y);
     }
 }
 
@@ -542,26 +539,26 @@ void MainWindow::recalculate()
     int size = valuesList->rowCount();
     qreal x, y;
     QPointF point, real;
-    QTableWidgetItem *calcX;
-    QTableWidgetItem *calcY;
+    QTableWidgetItem* calcX;
+    QTableWidgetItem* calcY;
 
-    for (int i=0; i<size; i++) {
-        x = valuesList->item(i,0)->text().toFloat();
-        y = valuesList->item(i,1)->text().toFloat();
+    for (int i = 0; i < size; i++) {
+        x = valuesList->item(i, 0)->text().toFloat();
+        y = valuesList->item(i, 1)->text().toFloat();
 
         point.setX(x);
         point.setY(y);
-     
+
         realPoints(point, real);
 
         calcX = new QTableWidgetItem(tr("%1").arg(real.x()));
         calcY = new QTableWidgetItem(tr("%1").arg(real.y()));
-        valuesList->setItem(i,2,calcX);
-        valuesList->setItem(i,3,calcY);
+        valuesList->setItem(i, 2, calcX);
+        valuesList->setItem(i, 3, calcY);
     }
 }
 
-void MainWindow::realPoints(const QPointF &point, QPointF &real)
+void MainWindow::realPoints(const QPointF& point, QPointF& real)
 {
     qreal ox0, ox1, oy0, oy1;
     qreal pX0x, pX0y, pX1x, pX1y, pY0x, pY0y, pY1x, pY1y;
@@ -596,7 +593,7 @@ void MainWindow::realPoints(const QPointF &point, QPointF &real)
 
     if (view->xLogBox->isChecked()) {
         if (ox0 == 0) {
-            ox0 = ox1*1e-37;
+            ox0 = ox1 * 1e-37;
         }
         scaleX = log10(ox1 / ox0);
     }
@@ -606,7 +603,7 @@ void MainWindow::realPoints(const QPointF &point, QPointF &real)
 
     if (view->yLogBox->isChecked()) {
         if (oy0 == 0) {
-            oy0 = oy1*1e-37;
+            oy0 = oy1 * 1e-37;
         }
         scaleY = log10(oy1 / oy0);
     }
@@ -628,44 +625,44 @@ void MainWindow::realPoints(const QPointF &point, QPointF &real)
     pYy = point.y();
 
     if (abs(pX1x - pX0x) < abs(pX1y - pX0y)) {
-        swap(pX0x,pX0y);
-        swap(pX1x,pX1y);
-        swap(pXx,pXy);
-    }
-    
-    if (abs(pY1y - pY0y) < abs(pY1x - pY0x)) {
-        swap(pY0x,pY0y);
-        swap(pY1x,pY1y);
-        swap(pYx,pYy);
+        swap(pX0x, pX0y);
+        swap(pX1x, pX1y);
+        swap(pXx, pXy);
     }
 
-    thx = atan((pX1y - pX0y)/(pX1x - pX0x));
-    thy = atan((pY1x - pY0x)/(pY1y - pY0y));
-    
-    xCal = cos(thx)*(pX1x - pX0x) + sin(thx)*(pX1y - pX0y); 
-    yCal = cos(thy)*(pY1y - pY0y) + sin(thy)*(pY1x - pY0x); 
-    
-    xPoint = cos(thx)*(pXx - pX0x) + sin(thx)*(pXy - pX0y); 
-    yPoint = cos(thy)*(pYy - pY0y) + sin(thy)*(pYx - pY0x);
+    if (abs(pY1y - pY0y) < abs(pY1x - pY0x)) {
+        swap(pY0x, pY0y);
+        swap(pY1x, pY1y);
+        swap(pYx, pYy);
+    }
+
+    thx = atan((pX1y - pX0y) / (pX1x - pX0x));
+    thy = atan((pY1x - pY0x) / (pY1y - pY0y));
+
+    xCal = cos(thx) * (pX1x - pX0x) + sin(thx) * (pX1y - pX0y);
+    yCal = cos(thy) * (pY1y - pY0y) + sin(thy) * (pY1x - pY0x);
+
+    xPoint = cos(thx) * (pXx - pX0x) + sin(thx) * (pXy - pX0y);
+    yPoint = cos(thy) * (pYy - pY0y) + sin(thy) * (pYx - pY0x);
 
     if (view->xLogBox->isChecked())
-        realx = ox0*pow(10,(xPoint*scaleX/xCal));
+        realx = ox0 * pow(10, (xPoint * scaleX / xCal));
     else
-        realx = ox0 + (xPoint*scaleX/xCal);
+        realx = ox0 + (xPoint * scaleX / xCal);
 
     if (view->yLogBox->isChecked())
-        realy = oy0*pow(10,(yPoint*scaleY/yCal));
+        realy = oy0 * pow(10, (yPoint * scaleY / yCal));
     else
-        realy = oy0 + (yPoint*scaleY/yCal);
+        realy = oy0 + (yPoint * scaleY / yCal);
 
     real.setX(realx);
     real.setY(realy);
 }
 
-void MainWindow::swap(qreal &f1, qreal &f2)
+void MainWindow::swap(qreal& f1, qreal& f2)
 {
-   qreal temp;
-   temp = f1;
-   f1 = f2;
-   f2 = temp;
+    qreal temp;
+    temp = f1;
+    f1 = f2;
+    f2 = temp;
 }

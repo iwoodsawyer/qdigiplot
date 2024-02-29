@@ -31,11 +31,11 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
-    <QtInstall>C:\Tools\Qt\6.5.3\msvc2019_64</QtInstall>
+    <QtInstall>C:\Tools\Qt\6.7.0\msvc2019_64</QtInstall>
     <QtModules>core;opengl;gui;widgets;printsupport</QtModules>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
-    <QtInstall>C:\Tools\Qt\6.5.3\msvc2019_64</QtInstall>
+    <QtInstall>C:\Tools\Qt\6.7.0\msvc2019_64</QtInstall>
     <QtModules>core;opengl;gui;widgets;printsupport</QtModules>
   </PropertyGroup>
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">

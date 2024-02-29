@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    app.setStyle(QStyleFactory::create("windowsvista"));
+    app.setStyle(QStyleFactory::create("windows11"));
     app.setWindowIcon(QIcon(":/images/chart_curve2.png"));
     QCoreApplication::setApplicationName("DigiPlot");
 
